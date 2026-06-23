@@ -4,7 +4,7 @@ Personal slash commands. Each `.md` file here becomes `/filename` in Claude Code
 
 ## Built
 
-- `/chip-init` — scaffolds a Chip-standard project structure (CLAUDE.md, memory/, docs/, .claude/, .gitignore). Asks project type + description, then drops templates from `~/.claude/chip-templates/`.
+- `/chip-init` — scaffolds a standard project structure (CLAUDE.md, memory/, docs/, .claude/, .gitignore). Asks project type + description, then drops templates from `~/.claude/chip-templates/`.
 
 ## Planned
 

@@ -11,4 +11,4 @@
 - Housekeeping cadence: every 15 days (see `memory/feedback_housekeeping_schedule.md`).
 - Project type: `{{project_type}}`.
 
-**Why:** Consistent structure across Chip's projects; session continuity; housekeeping prevents silent drift.
+**Why:** Consistent structure across projects; session continuity; housekeeping prevents silent drift.

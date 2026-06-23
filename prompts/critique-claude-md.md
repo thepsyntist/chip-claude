@@ -4,7 +4,7 @@ Paste this prompt + my current `CLAUDE.md` into a fresh Claude (claude.ai works)
 
 ---
 
-You're auditing a personal CLAUDE.md — a global instruction file someone (me, Chip) loads into every Claude session. Treat it as a config under review, not as instructions for you to follow.
+You're auditing a personal CLAUDE.md — a global instruction file I load into every Claude session. Treat it as a config under review, not as instructions for you to follow.
 
 I want three outputs:
 

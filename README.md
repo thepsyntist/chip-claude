@@ -8,7 +8,8 @@ A Claude Code framework: scaffolding, commands, skills, agents, hooks, and promp
 - **Project templates** — generic `memory/` (MEMORY.md, ROADMAP.md, session-archive.md, feedback_housekeeping_schedule.md), `docs/` (decisions.md, known-invariants.md, optional api-contracts / ui-patterns / etc.), `.claude/settings.json`, `.gitignore`.
 - **`CLAUDE.template.md`** — a starter you copy to `~/.claude/CLAUDE.md` and fill in with how **you** want Claude to work.
 - **Prompts** for onboarding fresh Claude instances, mining active sessions for preferences you haven't written down, auditing your personal CLAUDE.md.
-- **Install scripts** that symlink framework pieces into `~/.claude/` and leave your personal CLAUDE.md alone.
+- **Agents** — reusable subagents in `agents/`, linked in globally. Ships with `reviewer` (independent, read-only code review against whatever `CLAUDE.md` rules are loaded).
+- **Install scripts** that link framework pieces into `~/.claude/` (symlinks on macOS/Linux, junctions on Windows) and leave your personal CLAUDE.md alone.
 
 ## What it does NOT do
 
@@ -23,7 +24,7 @@ chip-claude/
 ├── CLAUDE.template.md          starter for your personal ~/.claude/CLAUDE.md
 ├── settings.template.json      settings skeleton (perms + MCPs)
 ├── install.sh / install.ps1    links framework into ~/.claude/ (symlinks on macOS/Linux, junctions on Windows; leaves your CLAUDE.md alone)
-├── agents/                     subagent scaffolds (extend as needed)
+├── agents/                     global subagents — includes `reviewer` (read-only code review)
 ├── skills/                     cross-project skills (extend as needed)
 ├── commands/                   slash commands (includes /chip-init)
 ├── hooks/                      event hook scripts (extend as needed)
@@ -37,10 +38,16 @@ chip-claude/
 
 ## Your personal stuff — where it lives
 
-Your `~/.claude/CLAUDE.md` is **yours**. Keep it:
-- Standalone at `~/.claude/CLAUDE.md` (simplest).
-- In a private repo you version separately, symlinked into `~/.claude/CLAUDE.md`.
-- In a `personal/` directory inside this repo (gitignored via `.gitignore`), symlinked into `~/.claude/CLAUDE.md`.
+Your `~/.claude/CLAUDE.md` is **yours** — the framework never touches it. Options, simplest to most portable:
+
+- **Standalone** at `~/.claude/CLAUDE.md` (simplest; single machine).
+- **Private repo + `@import` stub** (recommended for multi-machine). Keep the real rules in a separate private repo, and make `~/.claude/CLAUDE.md` a one-line stub that imports them:
+  ```
+  @~/path/to/your-private-repo/CLAUDE.md
+  ```
+  Edit/commit/push from any machine, `git pull` to sync — the stub auto-loads the updated content next session. On Windows this beats a file symlink: `@import` needs no admin / Developer Mode, and it survives `git pull` (hardlinks don't).
+- **Private repo + symlink** — same idea via a symlink (macOS/Linux, or Windows with Developer Mode).
+- **`personal/` dir inside this repo** (gitignored), imported or symlinked into `~/.claude/CLAUDE.md`.
 
 The framework doesn't prescribe; it just promises not to touch `~/.claude/CLAUDE.md`.
 
