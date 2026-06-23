@@ -1,0 +1,10 @@
+
+# Claude Code artifacts
+.claude/backups/
+.claude/cache/
+.claude/debug/
+.claude/history.jsonl
+.claude/todos/
+.claude/shell-snapshots/
+.claude/session-env/
+.claude/settings.local.json

@@ -1,0 +1,20 @@
+# Personal overlays — keep out of the shareable repo
+personal/
+*.personal.md
+# Only a personal CLAUDE.md dropped at the repo ROOT — NOT templates/CLAUDE.md,
+# which is the scaffold payload and must stay tracked.
+/CLAUDE.md
+
+# Machine-local junk
+.DS_Store
+Thumbs.db
+
+# Claude Code artifacts (if anyone opens this repo in Claude Code)
+.claude/backups/
+.claude/cache/
+.claude/debug/
+.claude/history.jsonl
+.claude/todos/
+.claude/shell-snapshots/
+.claude/session-env/
+.claude/settings.local.json

@@ -1,0 +1,31 @@
+{
+  "_comment": "Template. Do not copy raw into ~/.claude/settings.json — merge by hand so project-specific perms and MCPs accumulate.",
+  "permissions": {
+    "allow": [
+      "Bash(npm run typecheck)",
+      "Bash(npx tsc:*)",
+      "Bash(npx next build)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "mcp__filesystem__read_file",
+      "mcp__filesystem__read_text_file",
+      "mcp__filesystem__read_multiple_files",
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__directory_tree",
+      "mcp__filesystem__search_files"
+    ],
+    "additionalDirectories": []
+  },
+  "effortLevel": "high",
+  "autoUpdatesChannel": "latest",
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    }
+  }
+}
