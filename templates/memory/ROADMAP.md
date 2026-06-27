@@ -31,15 +31,13 @@
 
 ## Session Log (last 5 sessions)
 
-### Session 1 ({{today}}) -- Project scaffolded via /chip-init
+<!-- Append one entry per session, newest at top. Older than 5 → session-archive.md. Template:
+### Session 1 (YYYY-MM-DD) -- <focus>
+**Branch:** <branch>
+- <what changed>
+**Files changed:** <list>
+-->
 
-**Branch:** main
-
-- Scaffolded standard structure: `CLAUDE.md`, `memory/`, `docs/`, `.claude/`.
-- TODOs remain in every template file — fill as the project takes shape.
-
-**Files changed:** (scaffold only)
-
-**Docs updated:** all scaffolded.
+_Scaffolded {{today}} via /chip-init — the first real working session is Session 1._
 
 ---

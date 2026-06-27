@@ -1,5 +1,5 @@
 {
-  "_comment": "Template. Do not copy raw into ~/.claude/settings.json — merge by hand so project-specific perms and MCPs accumulate.",
+  "_comment": "Template. Do not copy raw into ~/.claude/settings.json — merge by hand so project-specific perms accumulate. MCP servers do NOT belong here: the settings.json validator rejects a top-level `mcpServers` field. Configure MCPs in .mcp.json / ~/.claude.json or via `claude mcp add` — see mcp.template.json for a pinned context7 example.",
   "permissions": {
     "allow": [
       "Bash(npm run typecheck)",
@@ -10,22 +10,10 @@
       "Bash(git log:*)",
       "Bash(git show:*)",
       "mcp__context7__resolve-library-id",
-      "mcp__context7__query-docs",
-      "mcp__filesystem__read_file",
-      "mcp__filesystem__read_text_file",
-      "mcp__filesystem__read_multiple_files",
-      "mcp__filesystem__list_directory",
-      "mcp__filesystem__directory_tree",
-      "mcp__filesystem__search_files"
+      "mcp__context7__query-docs"
     ],
     "additionalDirectories": []
   },
   "effortLevel": "high",
-  "autoUpdatesChannel": "latest",
-  "mcpServers": {
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp"]
-    }
-  }
+  "autoUpdatesChannel": "latest"
 }

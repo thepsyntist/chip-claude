@@ -26,7 +26,7 @@ Ask me (one message):
 
 > The chip-claude framework is not installed globally on this machine. Where is the repo?
 >
-> 1. A GitHub URL (I'll clone to `~/code/chip-claude`).
+> 1. A GitHub URL (I'll clone to `~/code/chip-claude`; the physical location doesn't matter — install symlinks it into `~/.claude` either way).
 > 2. A local path that already has the repo (give me the absolute path).
 >
 > Which one?

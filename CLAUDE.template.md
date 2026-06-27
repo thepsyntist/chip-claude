@@ -90,8 +90,11 @@
 
 ## Platform
 
-<!-- Your OS, shell, language-specific footguns. Examples: -->
-<!-- Windows 11 + Git Bash (MSYS). Unix shell syntax; MSYS_NO_PATHCONV=1 when passing paths to node scripts. -->
+<!-- Your OS(es), shell, language-specific footguns. Work across machines? Branch by OS so a rule never asserts one platform as fact. Examples: -->
+<!-- - Invariant (both): forward slashes everywhere; never hand-build a `C:\` path. -->
+<!-- - macOS (uname=Darwin): zsh/bash; POSIX paths `/Users/you/...` for Bash and Read/Write/Edit alike; no path mangling. -->
+<!-- - Windows 11 + Git Bash (MSYS): `/c/Users/you/...` in Bash, `C:\...` in Read/Write/Edit args; MSYS_NO_PATHCONV=1 when passing paths to node scripts. -->
+<!-- Single machine? Just describe the one OS. -->
 
 ## Natural-language triggers
 
