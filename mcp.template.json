@@ -1,0 +1,9 @@
+{
+  "_comment": "MCP server config. Goes in a project-root .mcp.json or in ~/.claude.json — NOT in settings.json (the validator rejects mcpServers there). Or register with: claude mcp add context7 -- npx -y @upstash/context7-mcp@3.2.2. Versions are pinned exactly per the supply-chain rule — bump deliberately, don't float to latest.",
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@3.2.2"]
+    }
+  }
+}

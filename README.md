@@ -22,7 +22,8 @@ A Claude Code framework: scaffolding, commands, skills, agents, hooks, and promp
 ```
 chip-claude/
 ├── CLAUDE.template.md          starter for your personal ~/.claude/CLAUDE.md
-├── settings.template.json      settings skeleton (perms + MCPs)
+├── settings.template.json      settings skeleton (perms, effort, update channel)
+├── mcp.template.json           MCP server config (pinned) for .mcp.json / claude mcp add
 ├── install.sh / install.ps1    links framework into ~/.claude/ (symlinks on macOS/Linux, junctions on Windows; leaves your CLAUDE.md alone)
 ├── agents/                     global subagents — includes `reviewer` (read-only code review)
 ├── skills/                     cross-project skills (extend as needed)
@@ -71,7 +72,7 @@ pwsh install.ps1       # Windows PowerShell
 
 Links `agents/`, `skills/`, `commands/`, `hooks/` into `~/.claude/`, and `templates/` into `~/.claude/chip-templates/` — symlinks on macOS/Linux, directory junctions on Windows (no admin / Developer Mode needed). Does **not** touch `~/.claude/CLAUDE.md`. Prints a hint if you don't have one yet.
 
-Merge `settings.template.json` into `~/.claude/settings.json` by hand.
+Merge `settings.template.json` into `~/.claude/settings.json` by hand. MCP servers don't go in settings.json — put them in `.mcp.json` / `~/.claude.json` or use `claude mcp add` (see `mcp.template.json` for a pinned context7 example).
 
 ### 3. New project on an already-set-up machine — just say it
 In a fresh Claude Code session in a new repo:
@@ -85,6 +86,7 @@ Your personal CLAUDE.md's natural-language triggers map that phrase to `/chip-in
 - Rename the repo to match your identity (e.g. `alice-claude`).
 - Rename `/chip-init` in `commands/` if you want (and update the natural-language triggers in your personal CLAUDE.md).
 - Replace `~/.claude/CLAUDE.md` with your own. Don't commit it here.
+- The `chip-templates` symlink name is hardcoded in `install.sh` / `install.ps1` and referenced in `commands/chip-init.md` + `prompts/bootstrap.md` — rename those too if you rebrand the prefix.
 
 ## Mining your working style
 

@@ -41,7 +41,7 @@ All long-form docs live in `docs/`:
 
 ## Memory
 
-`memory/MEMORY.md` is the index. Rule updates live in `feedback_*.md`, project state in `project_*.md`, external pointers in `reference_*.md`.
+`memory/MEMORY.md` is the index. Create memory files on demand, following the frontmatter format in `feedback_housekeeping_schedule.md`: rule updates as `feedback_*.md`, project state as `project_*.md`, external pointers as `reference_*.md`.
 
 ## Housekeeping
 
