@@ -31,16 +31,16 @@ Wait for the answer. Do not proceed without both.
 
 ### 3. Scaffold
 
-Read each template with the Read tool, substitute placeholders, Write to the target path.
+Run the script — one Bash call, quote the description:
 
-**Placeholders** (apply to every template):
-- `{{project_name}}` → basename of the current working directory
-- `{{project_description}}` → one-liner from step 2
-- `{{project_type}}` → answer from step 2
-- `{{today}}` → today's date in `YYYY-MM-DD` format
-- `{{today_plus_15}}` → today + 15 days in `YYYY-MM-DD` format
+```bash
+bash ~/.claude/chip-templates/scaffold.sh <project_type> "<one-line description>"
+```
 
-**Always create:**
+It substitutes all placeholders (`{{project_name}}` from the cwd basename, `{{project_description}}`, `{{project_type}}`, `{{today}}`, `{{today_plus_15}}`, `{{framework_cmd}}` from `framework.config`, `{{toolchain_perms}}` detected from files in the target cwd), writes the always-create set plus preset doc extras per project type, and handles `.gitignore` (append the `# Claude Code artifacts` marker block if missing, create the file if absent). Deterministic — same inputs, same output, on any model.
+
+**Fallback (script missing — e.g. an old install predates it):** read each template with the Read tool, substitute the seven placeholders above by hand (`{{framework_cmd}}` defaults to `chip-init` if `framework.config` isn't present; `{{toolchain_perms}}` defaults to empty — `"allow": []`), Write to the target path.
+
 | Template | Target |
 |---|---|
 | `~/.claude/chip-templates/CLAUDE.md` | `./CLAUDE.md` |
@@ -52,17 +52,11 @@ Read each template with the Read tool, substitute placeholders, Write to the tar
 | `~/.claude/chip-templates/docs/common/known-invariants.md` | `./docs/known-invariants.md` |
 | `~/.claude/chip-templates/claude-settings.json` | `./.claude/settings.json` |
 
-**If `project_type` is `backend` or `web-fullstack`:** also copy `docs/backend/*` into `./docs/` (api-contracts.md, error-responses.md, systems-catalog.md).
-
-**If `project_type` is `frontend` or `web-fullstack`:** also copy `docs/frontend/*` into `./docs/` (ui-patterns.md, design-philosophy.md).
-
-**.gitignore handling:**
-- If `./.gitignore` exists: read it, check if it contains the marker `# Claude Code artifacts`. If not, append the content of `~/.claude/chip-templates/gitignore-additions.txt`.
-- If `./.gitignore` does not exist: write the template content as the new file.
+Doc presets are a directory convention: any `docs/<project_type>/*.md` in the template dir is copied into `./docs/`; `web-fullstack` unions `docs/backend/*` + `docs/frontend/*`. Ships with `backend` (api-contracts.md, error-responses.md, systems-catalog.md) and `frontend` (ui-patterns.md, design-philosophy.md) — add a `docs/<type>/` directory to give another project type its own extras, no script change needed. `.gitignore`: if it exists and lacks the `# Claude Code artifacts` marker, append `gitignore-additions.txt`; if missing, write it as the new file.
 
 ### 4. Report
 
-Print a tree of what was created:
+Print the script's own output verbatim — it already reports the created tree and the TODO list in the format below. If you ran the fallback path, reproduce this shape by hand:
 
 ```
 Scaffolded <project_name> (<project_type>):

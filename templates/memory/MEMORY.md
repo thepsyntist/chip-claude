@@ -1,6 +1,6 @@
 # {{project_name}} Memory Index
 
-> Scaffolded {{today}} via `/chip-init`. Long-form docs: `docs/`.
+> Scaffolded {{today}} via `/{{framework_cmd}}`. Long-form docs: `docs/`.
 
 ## What is {{project_name}}
 {{project_description}}

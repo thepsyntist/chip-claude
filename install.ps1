@@ -9,6 +9,16 @@ $RepoDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ClaudeDir = Join-Path $env:USERPROFILE ".claude"
 $BackupDir = Join-Path $ClaudeDir "backups\install-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
 
+$FrameworkName = "chip-claude"
+$FrameworkPrefix = "chip"
+$ConfigPath = Join-Path $RepoDir "templates\framework.config"
+if (Test-Path $ConfigPath) {
+  foreach ($line in Get-Content $ConfigPath) {
+    if ($line -match '^\s*FRAMEWORK_NAME=(.+)$')   { $FrameworkName = $Matches[1].Trim() }
+    if ($line -match '^\s*FRAMEWORK_PREFIX=(.+)$') { $FrameworkPrefix = $Matches[1].Trim() }
+  }
+}
+
 New-Item -ItemType Directory -Force -Path $ClaudeDir | Out-Null
 New-Item -ItemType Directory -Force -Path $BackupDir | Out-Null
 
@@ -34,7 +44,8 @@ Link-Item "$RepoDir\agents"    "$ClaudeDir\agents"
 Link-Item "$RepoDir\skills"    "$ClaudeDir\skills"
 Link-Item "$RepoDir\commands"  "$ClaudeDir\commands"
 Link-Item "$RepoDir\hooks"     "$ClaudeDir\hooks"
-Link-Item "$RepoDir\templates" "$ClaudeDir\chip-templates"
+Link-Item "$RepoDir\templates" "$ClaudeDir\$FrameworkPrefix-templates"
+Link-Item "$RepoDir"           "$ClaudeDir\$FrameworkName"
 
 Write-Host ""
 Write-Host "Personal CLAUDE.md: not touched."

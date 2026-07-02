@@ -45,6 +45,8 @@ All long-form docs live in `docs/`:
 
 ## Housekeeping
 
+*Cadence, session log, and the memory taxonomy are the default rhythm — solo, session-based work. Change freely; nothing else depends on them.*
+
 Every ~15 days, run a housekeeping pass. See `memory/feedback_housekeeping_schedule.md`.
 
 ## Session Log

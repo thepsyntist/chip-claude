@@ -15,6 +15,13 @@ REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_DIR="${HOME}/.claude"
 BACKUP_DIR="${CLAUDE_DIR}/backups/install-$(date +%Y%m%d-%H%M%S)"
 
+FRAMEWORK_NAME="chip-claude"
+FRAMEWORK_PREFIX="chip"
+if [[ -f "$REPO_DIR/templates/framework.config" ]]; then
+  # shellcheck source=/dev/null
+  source "$REPO_DIR/templates/framework.config"
+fi
+
 case "$(uname -s)" in
   MINGW*|MSYS*|CYGWIN*) IS_WINDOWS=1 ;;
   *)                    IS_WINDOWS=0 ;;
@@ -61,7 +68,8 @@ link "$REPO_DIR/agents"    "$CLAUDE_DIR/agents"
 link "$REPO_DIR/skills"    "$CLAUDE_DIR/skills"
 link "$REPO_DIR/commands"  "$CLAUDE_DIR/commands"
 link "$REPO_DIR/hooks"     "$CLAUDE_DIR/hooks"
-link "$REPO_DIR/templates" "$CLAUDE_DIR/chip-templates"
+link "$REPO_DIR/templates" "$CLAUDE_DIR/${FRAMEWORK_PREFIX}-templates"
+link "$REPO_DIR"           "$CLAUDE_DIR/${FRAMEWORK_NAME}"
 
 echo ""
 echo "Personal CLAUDE.md: not touched."

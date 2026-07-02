@@ -63,6 +63,16 @@
 <!-- - Modularize > copy-paste. -->
 <!-- - No new libraries/abstractions without asking. -->
 
+## Tool & model economy
+
+<!-- How you want Claude to spend tool calls and context. Examples: -->
+<!-- - Broad exploration → Explore subagent, keeps main context lean. Known-file lookups → direct Grep/Read. -->
+<!-- - Independent tool calls → batch in one message. -->
+<!-- - Big files → targeted Read (offset/limit), not the whole thing. -->
+<!-- - 3+ shell steps with no decision between them → one script, not N round-trips. -->
+<!-- - Bulk mechanical fan-out → cheap-model subagents (`model: haiku`); judgment stays in the main loop. -->
+<!-- - Multi-phase task → written plan first, then execute. Don't discover scope mid-edit. -->
+
 ## Git discipline
 
 <!-- - Never auto-commit or auto-push. -->

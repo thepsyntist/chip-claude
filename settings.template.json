@@ -1,5 +1,5 @@
 {
-  "_comment": "Template. Do not copy raw into ~/.claude/settings.json — merge by hand so project-specific perms accumulate. MCP servers do NOT belong here: the settings.json validator rejects a top-level `mcpServers` field. Configure MCPs in .mcp.json / ~/.claude.json or via `claude mcp add` — see mcp.template.json for a pinned context7 example.",
+  "_comment": "Template. Do not copy raw into ~/.claude/settings.json — merge by hand so project-specific perms accumulate. MCP servers do NOT belong here: the settings.json validator rejects a top-level `mcpServers` field. Configure MCPs in .mcp.json / ~/.claude.json or via `claude mcp add` — see mcp.template.json for a pinned context7 example. The `hooks` block wires: pre-git-push.sh (approval prompt on any git state mutation) and pre-secrets-guard.sh (approval prompt before reading likely secrets material) on PreToolUse; post-edit-typecheck.sh (typecheck feedback after a .ts/.tsx edit) on PostToolUse; session-context.sh (date/branch/staleness primer) on SessionStart; pre-compact-snapshot.sh (repo-state snapshot before compaction) on PreCompact; stop-dod-check.sh (debug-leftover sweep) on Stop. All are belt-and-braces on top of the corresponding CLAUDE.md rule — delete any entry to disable it. The `statusLine` block runs statusline.sh from the chip-claude clone (not junctioned separately, hence the longer path). The npm/tsc/next allow-rules below are a JS/TS default, not a universal one — swap for your stack's equivalents (cargo check/test, pytest, go test); per-project scaffolds via /chip-init already detect this automatically. `effortLevel: high` and `autoUpdatesChannel: latest` are the author's cost/stability posture, not neutral defaults — `medium` + `stable` are the conservative picks for a fork.",
   "permissions": {
     "allow": [
       "Bash(npm run typecheck)",
@@ -9,11 +9,68 @@
       "Bash(git diff:*)",
       "Bash(git log:*)",
       "Bash(git show:*)",
+      "Bash(git branch:*)",
+      "Bash(git remote:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git ls-remote:*)",
+      "Bash(git fetch:*)",
+      "Bash(ls:*)",
       "mcp__context7__resolve-library-id",
       "mcp__context7__query-docs"
     ],
     "additionalDirectories": []
   },
   "effortLevel": "high",
-  "autoUpdatesChannel": "latest"
+  "autoUpdatesChannel": "latest",
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/chip-claude/statusline/statusline.sh"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          { "type": "command", "command": "bash ~/.claude/hooks/session-context.sh" }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "bash ~/.claude/hooks/pre-git-push.sh" }
+        ]
+      },
+      {
+        "matcher": "Read|Bash",
+        "hooks": [
+          { "type": "command", "command": "bash ~/.claude/hooks/pre-secrets-guard.sh" }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "bash ~/.claude/hooks/post-edit-typecheck.sh" }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "manual|auto",
+        "hooks": [
+          { "type": "command", "command": "bash ~/.claude/hooks/pre-compact-snapshot.sh" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "bash ~/.claude/hooks/stop-dod-check.sh" }
+        ]
+      }
+    ]
+  }
 }

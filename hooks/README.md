@@ -2,10 +2,13 @@
 
 Event hooks. Configured in `~/.claude/settings.json` under `hooks`, not by file presence — this dir holds the scripts the settings reference.
 
-## Planned
+## Built
 
-- `pre-git-push.sh` — PreToolUse guard: reject `git push` calls and require the word explicitly from me (belt-and-braces on top of the CLAUDE.md rule).
-- `stop-session-log.sh` — Stop hook: prompts "log this session?" at end-of-conversation if the project has a session archive file.
-- `pre-edit-verify-read.sh` — PreToolUse: soft warn if editing a file that wasn't Read in the last N tool calls.
+- `pre-git-push.sh` — PreToolUse guard on the Bash matcher. Scans every Bash call for a git command that mutates repo state (`commit`, `push`, `rebase`, `merge`, `reset --hard`, `checkout --`, `commit --amend`, `stash drop`/`clear`, `pull --rebase`) and forces an explicit approval prompt — belt-and-braces on top of the CLAUDE.md git-discipline rule, so it holds even if a weaker model skims past the prose. Plain `git status`/`diff`/`log`/`show`/`branch`/`ls-files`/`ls-remote`/`remote -v`/`fetch`/`pull` pass through silently. Wired in `settings.template.json`'s `hooks` block — delete that block to disable. It fires even on a push you explicitly asked for; that's one extra keypress, by design.
+- `pre-secrets-guard.sh` — PreToolUse guard on the `Read|Bash` matcher. Scans for likely secrets material (`.env*` except `.example`/`.template`/`.sample`, SSH private keys, `.pem`, `credentials*.json`, `.netrc`, `.npmrc`) and forces an approval prompt before a model can read or cat one. Same broad-pattern, ask-not-deny philosophy as `pre-git-push.sh`.
+- `session-context.sh` — SessionStart hook. Prints a compact primer (date, cwd, git branch/dirty count, `ROADMAP.md` staleness, and a pointer to a fresh `pre-compact-snapshot.sh` output if one exists) so the model never starts a session blind.
+- `post-edit-typecheck.sh` — PostToolUse hook on the `Edit|Write` matcher. After a `.ts`/`.tsx` edit in a project with a `tsconfig.json`, runs `tsc --noEmit` and surfaces any errors touching the edited file back to the model as context — Definition-of-done "typecheck passes," mechanized. Silent on anything else; never blocks. Escape hatch: `CHIP_NO_TYPECHECK=1`.
+- `pre-compact-snapshot.sh` — PreCompact hook (both matchers). Writes a black-box snapshot (timestamp, trigger, transcript pointer, git branch/status/diffstat) to `~/.claude/scratch/precompact-<project>.md` before compaction — so the model can read real repo state afterward instead of trusting a lossy summary. One snapshot per project, overwritten each time.
+- `stop-dod-check.sh` — Stop hook. Scans the turn's diff for common debug leftovers (`console.log`, `debugger`, `dump(`, etc.) in **code files only** (`ts`/`tsx`/`js`/`jsx`/`mjs`/`cjs`/`py`) and nudges the model to clean up before the turn ends — Definition-of-done "nothing extra left behind," mechanized. Docs/config/shell diffs are ignored by design, so it doesn't fire on prose describing this very hook. Respects `stop_hook_active` so it can't loop forever. Supersedes the old `stop-session-log.sh` idea below: session-logging stays a deliberate manual `/session-log` call, not something a hook decides for you.
 
 Add the corresponding entries to `settings.template.json` when a hook is built.

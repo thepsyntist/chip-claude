@@ -38,6 +38,6 @@
 **Files changed:** <list>
 -->
 
-_Scaffolded {{today}} via /chip-init — the first real working session is Session 1._
+_Scaffolded {{today}} via /{{framework_cmd}} — the first real working session is Session 1._
 
 ---

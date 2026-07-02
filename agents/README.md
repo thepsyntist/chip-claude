@@ -7,6 +7,7 @@ Claude Code auto-discovers any `.md` file here as an invokable agent at `~/.clau
 ## Built
 
 - `reviewer.md` — independent, read-only code reviewer. Sources the active rules from the project + global `CLAUDE.md`, reviews only the diff, returns a PASS / NEEDS-WORK punch list. Never edits or touches git.
+- `haiku-grunt.md` — cheap-model (`haiku`) bulk mechanical fan-out: per-file audits, mass renames, repetitive transforms with no judgment call involved. Zero scope expansion, skips-and-lists anything ambiguous instead of guessing.
 
 ## Planned
 

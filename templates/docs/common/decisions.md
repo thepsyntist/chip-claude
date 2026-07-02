@@ -4,7 +4,7 @@
 
 ---
 
-## {{today}} — Project scaffolded with `/chip-init`
+## {{today}} — Project scaffolded with `/{{framework_cmd}}`
 
 - Standard doc + memory structure established.
 - Session-archive pattern adopted (`ROADMAP.md` keeps last 5 sessions; older overflow to `session-archive.md`).

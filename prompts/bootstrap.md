@@ -15,7 +15,7 @@ Run:
 test -e ~/.claude/chip-templates/memory/MEMORY.md && echo INSTALLED || echo MISSING
 ```
 
-(`chip-templates` is a symlink on macOS/Linux, a directory junction on Windows — so check that it *resolves*, not that it's a symlink.)
+(`chip-templates` is the default name, set in `templates/framework.config` — a symlink on macOS/Linux, a directory junction on Windows, so check that it *resolves*, not that it's a symlink.)
 
 - `INSTALLED` → framework is installed. Skip to Step 3.
 - `MISSING` → continue to Step 2.
@@ -40,7 +40,7 @@ Run the install:
 - Git Bash / macOS / Linux: `bash <repo>/install.sh`
 - Pure PowerShell: `pwsh <repo>/install.ps1`
 
-Verify `~/.claude/chip-templates` now resolves to `<repo>/templates` (symlink on macOS/Linux, junction on Windows).
+Verify `~/.claude/chip-templates` (default — set in `templates/framework.config`) now resolves to `<repo>/templates` (symlink on macOS/Linux, junction on Windows).
 
 ## Step 3: Personal CLAUDE.md
 
@@ -55,14 +55,14 @@ ls -la ~/.claude/CLAUDE.md 2>/dev/null
 > You don't have a personal `~/.claude/CLAUDE.md` yet. Three options:
 >
 > 1. Copy the framework's `CLAUDE.template.md` there so I can fill it in now or later.
-> 2. Point me at an existing personal file elsewhere (absolute path); I'll symlink it.
+> 2. Point me at an existing personal file elsewhere (absolute path); I'll wire it in with an `@import` stub.
 > 3. Skip for now — I'll manage it myself.
 >
 > Which one?
 
 Act on the answer:
 - Option 1: `cp <repo>/CLAUDE.template.md ~/.claude/CLAUDE.md`. Tell me to edit it before the next session.
-- Option 2: `ln -s <path> ~/.claude/CLAUDE.md`.
+- Option 2: write `~/.claude/CLAUDE.md` containing exactly one line, `@<absolute path>`. Use the `@import` stub, not a symlink — it works on every OS with no admin/Developer Mode, and it survives `git pull` (a Windows file symlink from MSYS `ln -s` silently copies instead of linking, which breaks sync).
 - Option 3: no action.
 
 ## Step 4: Scaffold the current project (optional)
