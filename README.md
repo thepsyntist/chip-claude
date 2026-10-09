@@ -8,6 +8,7 @@ A Claude Code framework: scaffolding, commands, skills, agents, hooks, and promp
 - **`/session-log`** — appends today's session to `memory/ROADMAP.md` in its existing format, archiving overflow past 5 entries into `session-archive.md`.
 - **`/housekeeping`** — runs the project's housekeeping cadence against `memory/feedback_housekeeping_schedule.md` if it's due; read-only findings, asks before any edit-requiring fix.
 - **`/onboard-new-claude`** — prints `prompts/onboard-new-claude.md` verbatim for quick copy into a stateless Claude instance.
+- **`/talk`** — discussion mode: think it through, no plans or edits until you say a build word. Backstop for when Claude drifts into building on a "could you…?" question.
 - **Project templates** — generic `memory/` (MEMORY.md, ROADMAP.md, session-archive.md, feedback_housekeeping_schedule.md), `docs/` (decisions.md, known-invariants.md, optional api-contracts / ui-patterns / etc.), `.claude/settings.json`, `.gitignore`. The shipped cadence, session-log format, and memory taxonomy are a default rhythm — solo, session-based — not load-bearing structure; change freely.
 - **`CLAUDE.template.md`** — a starter you copy to `~/.claude/CLAUDE.md` and fill in with how **you** want Claude to work.
 - **Prompts** for onboarding fresh Claude instances, mining active sessions for preferences you haven't written down, auditing your personal CLAUDE.md.
@@ -33,7 +34,7 @@ chip-claude/
 ├── install.sh / install.ps1    links framework into ~/.claude/ (symlinks on macOS/Linux, junctions on Windows; leaves your CLAUDE.md alone)
 ├── agents/                     global subagents — reviewer (read-only review), haiku-grunt (cheap bulk fan-out)
 ├── skills/                     cross-project skills — debug-protocol, verify-ui (extend as needed)
-├── commands/                   slash commands (/chip-init, /session-log, /housekeeping, /onboard-new-claude)
+├── commands/                   slash commands (/chip-init, /session-log, /housekeeping, /onboard-new-claude, /talk)
 ├── hooks/                      event hooks — git/secrets guards, session-context, typecheck feedback, precompact snapshot, stop-hook DoD sweep
 ├── statusline/                 statusLine command — model, cwd, branch, context usage
 ├── templates/                  /chip-init project scaffold templates + scaffold.sh

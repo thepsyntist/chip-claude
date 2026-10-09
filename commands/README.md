@@ -8,3 +8,4 @@ Personal slash commands. Each `.md` file here becomes `/filename` in Claude Code
 - `/session-log` — appends today's session to `memory/ROADMAP.md` in its existing format; archives overflow past 5 entries into `memory/session-archive.md`.
 - `/housekeeping` — runs the project's housekeeping cadence against `memory/feedback_housekeeping_schedule.md` if it's due; reports read-only findings, asks before any edit-requiring fix.
 - `/onboard-new-claude` — prints `prompts/onboard-new-claude.md` verbatim for quick copy into a stateless Claude instance.
+- `/talk` — discussion mode for the rest of the session: think it through, no plans or edits until a build word ("build", "do it", "exit talk"). Optional topic arg.
