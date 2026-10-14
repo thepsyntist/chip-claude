@@ -13,6 +13,11 @@
 # Bias: never block on doubt. Single awk pass over the whole diff (not one
 # grep process per added line) — this fires every turn, so per-line process
 # spawn cost matters, especially on Windows.
+#
+# Noise guard: the diff is the whole dirty tree, not just this turn, so lines
+# left by another session or by the user would otherwise nag every turn. Each
+# hit is reported once per session (seen-list keyed by session_id); after
+# that it's a known quantity, not a fresh leftover.
 
 payload="$(cat)"
 
@@ -35,13 +40,26 @@ hits="$(printf '%s\n' "$diff_output" | awk '
   /^\+/ {
     if (!is_code) next
     content = substr($0, 2)
-    if (content ~ /console\.log|debugger|TODO\(claude\)|FIXME\(claude\)|dump\(|print\(.*DEBUG/) {
+    # dump( must be a bare call: not _dump(, model_dump(, json.dump( etc.
+    if (content ~ /console\.log|debugger|TODO\(claude\)|FIXME\(claude\)|(^|[^A-Za-z0-9_.])dump\(|print\(.*DEBUG/) {
       print file ": " content
     }
   }
 ')"
 
 [[ -z "$hits" ]] && exit 0
+
+session_id="$(printf '%s' "$payload" | sed -n 's/.*"session_id"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
+if [[ -n "$session_id" ]]; then
+  seen_file="${TMPDIR:-/tmp}/claude-dod-seen-${session_id}"
+  touch "$seen_file" 2>/dev/null
+  if [[ -w "$seen_file" ]]; then
+    new_hits="$(printf '%s\n' "$hits" | grep -Fxv -f "$seen_file")"
+    printf '%s\n' "$hits" >> "$seen_file"
+    hits="$new_hits"
+    [[ -z "$hits" ]] && exit 0
+  fi
+fi
 
 escaped="${hits//\\/\\\\}"
 escaped="${escaped//\"/\\\"}"
