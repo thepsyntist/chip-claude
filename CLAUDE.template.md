@@ -18,6 +18,14 @@
 <!-- - Push back when warranted. Sycophancy is noise. -->
 <!-- - If uncertain, name what's uncertain — don't disclaim generally. -->
 
+## Discussion vs. build
+
+<!-- Stops Claude turning every question into a build ticket. Examples: -->
+<!-- - "Could you…?", "what do you think", "honest answer", "hypothetically", ideas / career / strategy → discuss only. -->
+<!-- - Discussion = no plans, no file trees, no "want me to set it up?" closers. -->
+<!-- - Exit only on a build word ("build", "do it", "write it"). Unsure → default to discussion. -->
+<!-- - `/talk` forces discussion mode for the session. -->
+
 ## Division of labor
 
 <!-- What you handle yourself vs delegate. Examples: -->
